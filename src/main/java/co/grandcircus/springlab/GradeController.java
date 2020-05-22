@@ -41,15 +41,22 @@ public class GradeController {
 	}
 	
 	@RequestMapping("/grades/detail")
-	public String roomDetail(@RequestParam Long id, Model model) {
+	public String gradeDetail(@RequestParam Long id, Model model) {
 		Grade grade = gradeDao.findById(id);
 		model.addAttribute("grade", grade);
 		return "detail";
 	}
 	
 	@RequestMapping("/grades/delete")
-	public String deleteRoom(@RequestParam Long id) {
+	public String showDeletePage(@RequestParam Long id) {
 		gradeDao.delete(id);
 		return "redirect:/grades";
+	}
+	
+	@RequestMapping("/grades/deleteconfirmation")
+	public String deletePage(@RequestParam Long id, Model model) {
+		Grade grade = gradeDao.findById(id);
+		model.addAttribute("grade", grade);
+		return "deleteconfirmation";
 	}
 }

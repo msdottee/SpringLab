@@ -29,8 +29,8 @@
 				<td><c:out value="${grade.total}" /></td>
 			</tr>
 		</table>
-		<a class="btn btn-danger" href="/grades/delete?id=${grade.id}">Delete</a>
-		<a class="btn link" href="/">Back to List</a>
+		<a class="btn btn-danger" href="/grades/deleteconfirmation?id=${grade.id}">Delete</a>
+		<a class="btn btn-light" href="/">Cancel</a>
 	</div>
 </body>
 </html>

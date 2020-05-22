@@ -29,8 +29,8 @@
 					<td><input type="number" step="any" name="total" /></td>
 				</tr>
 			</table>
-			<button type="submit" class="btn btn-primary">Add</button>
-			<a class="btn link" href="/">Cancel</a>
+			<button type="submit" class="btn btn-success">Add</button>
+			<a class="btn btn-light" href="/">Cancel</a>
 		</form>
 	</div>
 </body>

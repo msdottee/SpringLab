@@ -29,7 +29,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<a href="/grades/add" class="btn btn-secondary">Add Grade</a>
+		<a href="/grades/add" class="btn btn-dark">Add Grade</a>
 	</div>
 </body>
 </html>
