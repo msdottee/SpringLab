@@ -32,7 +32,7 @@ public class GradeController {
 		return "add";
 	}
 	
-	@RequestMapping("grades/addconfirmation")
+	@RequestMapping("/grades/addconfirmation")
 	public String reviewConfirmation(Grade grade,
 			Model model) {
 		gradeDao.create(grade);

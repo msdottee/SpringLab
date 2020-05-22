@@ -10,7 +10,7 @@
 <body>
 	<div class="container">
 		<h1><b>Add a Grade</b></h1>
-		<form action="/addconfirmation" method="post">
+		<form action="/grades/addconfirmation" method="post">
 			<table class="table">
 				<tr>
 					<th scope="row">Name</th>
@@ -30,7 +30,7 @@
 				</tr>
 			</table>
 			<button type="submit" class="btn btn-primary">Add</button>
-			<a class="btn link" href="/rooms">Cancel</a>
+			<a class="btn link" href="/">Cancel</a>
 		</form>
 	</div>
 </body>
