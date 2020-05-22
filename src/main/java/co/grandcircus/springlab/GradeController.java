@@ -1,5 +1,7 @@
 package co.grandcircus.springlab;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 
@@ -24,6 +26,14 @@ public class GradeController {
 	public String list(Model model) {
 		List<Grade> grades = gradeDao.findAll();
 		model.addAttribute("grades", grades);
+		BigDecimal totalScore = new BigDecimal(0);
+		BigDecimal sumTotal = new BigDecimal(0);
+		for (Grade grade : grades) {
+			totalScore = totalScore.add(grade.getScore());
+			sumTotal = sumTotal.add(grade.getTotal());
+		}
+		BigDecimal totalGrade = totalScore.divide(sumTotal, 1, RoundingMode.HALF_UP).multiply(new BigDecimal(100));
+		model.addAttribute("totalGrade", totalGrade);
 		return "list";
 	}
 	
