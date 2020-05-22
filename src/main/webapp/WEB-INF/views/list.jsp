@@ -39,7 +39,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<p><b>Overall Grade:</b> ${totalGrade}</p>
+		<p><b>Overall Grade:</b> ${totalGrade}%</p>
 		<a href="/grades/add" class="btn btn-dark">Add Grade</a>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
