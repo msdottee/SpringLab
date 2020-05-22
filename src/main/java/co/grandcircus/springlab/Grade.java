@@ -1,14 +1,17 @@
 package co.grandcircus.springlab;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Grade {
 
 	private Long id;
 	private String name;
 	private String type;
-	private Double score;
-	private Double total;
+	private BigDecimal score;
+	private BigDecimal total;
 	
-	public Grade(Long id, String name, String type, Double score, Double total) {
+	public Grade(Long id, String name, String type, BigDecimal score, BigDecimal total) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -45,20 +48,23 @@ public class Grade {
 		this.type = type;
 	}
 
-	public Double getScore() {
+	public BigDecimal getScore() {
 		return score;
 	}
 
-	public void setScore(Double score) {
+	public void setScore(BigDecimal score) {
 		this.score = score;
 	}
 
-	public Double getTotal() {
+	public BigDecimal getTotal() {
 		return total;
 	}
 
-	public void setTotal(Double total) {
+	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
 	
+	public BigDecimal getPercentage() {
+		return score.divide(total, 1, RoundingMode.HALF_UP).multiply(new BigDecimal(100));
+	}
 }

@@ -14,7 +14,7 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>Name</th><th>Type</th><th>Score</th><th>Total</th>
+					<th>Name</th><th>Type</th><th>Score</th><th>Total</th><th>Percentage</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -24,6 +24,7 @@
 					<td><c:out value="${grade.type}" /></td>
 					<td><c:out value="${grade.score}" /></td>
 					<td><c:out value="${grade.total}" /></td>
+					<td><c:out value="${grade.percentage}%" /></td>
 				</tr>
 				</c:forEach>
 			</tbody>
