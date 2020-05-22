@@ -1,0 +1,14 @@
+@charset "ISO-8859-1";
+
+.bg-light {
+    background-color: #00CED1!important;
+     opacity: 0.6;
+}
+
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    color: dimgray;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: dimgray;
+}
