@@ -120,6 +120,13 @@ public class GradeIntegrationTest {
     }
 
     @Test
+    public void deleteConfirmationDisplaysNotFoundOnMissingGrade() throws Exception {
+        mvc.perform(get("/grades/deleteconfirmation")
+                .queryParam("id", "-1"))
+                .andExpect(content().bytes(new byte[0]));
+    }
+
+    @Test
     public void deleteRedirectsToGradesAndDeletesGrade() throws Exception {
         Grade gradeToDisplay = gradeDao.findAll().get(0);
         mvc.perform(delete("/grades/delete")
