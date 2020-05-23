@@ -1,8 +1,10 @@
 package co.grandcircus.springlab;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,9 +20,13 @@ public class GradeDao {
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(Grade.class));
 	}
 	
-	public Grade findById(Long id) {
-		String sql = "SELECT * FROM grades WHERE id = ?";
-		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Grade.class), id);
+	public Optional<Grade> findById(Long id) {
+		try {
+			String sql = "SELECT * FROM grades WHERE id = ?";
+			return Optional.of(jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Grade.class), id));
+		} catch (EmptyResultDataAccessException exception) {
+			return Optional.empty();
+		}
 	}
 	
 	public void create(Grade grade) {

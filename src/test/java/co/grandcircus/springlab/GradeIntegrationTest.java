@@ -1,6 +1,7 @@
 package co.grandcircus.springlab;
 
 import org.aspectj.lang.annotation.Before;
+import org.hamcrest.number.BigDecimalCloseTo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +9,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -82,5 +84,49 @@ public class GradeIntegrationTest {
         assertThat(createdGrade.getScore()).isEqualTo(new BigDecimal("49.0"));
         assertThat(createdGrade.getTotal()).isEqualTo(new BigDecimal("50.0"));
         assertThat(createdGrade.getPercentage()).isEqualTo(new BigDecimal("98.0"));
+    }
+
+    @Test
+    public void displayDetailPageDisplaysGrade() throws Exception {
+        Grade gradeToDisplay = gradeDao.findAll().get(0);
+        mvc.perform(get("/grades/detail")
+                .queryParam("id", gradeToDisplay.getId().toString()))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("grade", hasProperty("name",
+                        is("African Countries Worksheet"))))
+                .andExpect(model().attribute("grade", hasProperty("type",
+                        is("Assignment"))))
+                .andExpect(model().attribute("grade", hasProperty("score",
+                        is(new BigDecimal("10.0")))))
+                .andExpect(model().attribute("grade", hasProperty("total",
+                        is(new BigDecimal("10.0")))));
+    }
+
+    @Test
+    public void displayDetailPageDisplaysNotFoundOnMissingGrade() throws Exception {
+        mvc.perform(get("/grades/detail")
+                .queryParam("id", "-1"))
+                .andExpect(content().bytes(new byte[0]));
+    }
+
+    @Test
+    public void deleteConfirmationDisplaysGradeToBeDeleted() throws Exception {
+        Grade gradeToDisplay = gradeDao.findAll().get(0);
+        mvc.perform(get("/grades/deleteconfirmation")
+        .queryParam("id", gradeToDisplay.getId().toString()))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("grade", hasProperty("name",
+                        is("African Countries Worksheet"))));
+    }
+
+    @Test
+    public void deleteRedirectsToGradesAndDeletesGrade() throws Exception {
+        Grade gradeToDisplay = gradeDao.findAll().get(0);
+        mvc.perform(delete("/grades/delete")
+                .queryParam("id", gradeToDisplay.getId().toString()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/grades"));
+
+        assertThat(gradeDao.findById(gradeToDisplay.getId())).isEmpty();
     }
 }

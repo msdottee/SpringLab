@@ -3,13 +3,16 @@ package co.grandcircus.springlab;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Controller
 public class GradeController {
@@ -53,21 +56,29 @@ public class GradeController {
 	
 	@RequestMapping("/grades/detail")
 	public String gradeDetail(@RequestParam Long id, Model model) {
-		Grade grade = gradeDao.findById(id);
-		model.addAttribute("grade", grade);
-		return "detail";
-	}
-	
-	@RequestMapping("/grades/delete")
-	public String showDeletePage(@RequestParam Long id) {
-		gradeDao.delete(id);
-		return "redirect:/grades";
+		Optional<Grade> grade = gradeDao.findById(id);
+		if (grade.isPresent()) {
+			model.addAttribute("grade", grade.get());
+			return "detail";
+		} else {
+			return null;
+		}
 	}
 	
 	@RequestMapping("/grades/deleteconfirmation")
 	public String deletePage(@RequestParam Long id, Model model) {
-		Grade grade = gradeDao.findById(id);
-		model.addAttribute("grade", grade);
-		return "deleteconfirmation";
+		Optional<Grade> grade = gradeDao.findById(id);
+		if(grade.isPresent()) {
+			model.addAttribute("grade", grade.get());
+			return "deleteconfirmation";
+		} else {
+			return null;
+		}
+	}
+
+	@RequestMapping("/grades/delete")
+	public String showDeletePage(@RequestParam Long id) {
+		gradeDao.delete(id);
+		return "redirect:/grades";
 	}
 }
