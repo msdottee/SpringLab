@@ -11,9 +11,9 @@ public class Grade {
 	private BigDecimal score;
 	private BigDecimal total;
 	
-	public Grade(Long id, String name, String type, BigDecimal score, BigDecimal total) {
+	public Grade(String name, String type, BigDecimal score, BigDecimal total) {
 		super();
-		this.id = id;
+		this.id = null;
 		this.name = name;
 		this.type = type;
 		this.score = score;
@@ -65,6 +65,7 @@ public class Grade {
 	}
 	
 	public BigDecimal getPercentage() {
-		return score.divide(total, 1, RoundingMode.HALF_UP).multiply(new BigDecimal(100));
+		return score.divide(total, 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100))
+				.setScale(1, RoundingMode.HALF_UP);
 	}
 }

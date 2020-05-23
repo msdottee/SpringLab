@@ -32,7 +32,8 @@ public class GradeController {
 			totalScore = totalScore.add(grade.getScore());
 			sumTotal = sumTotal.add(grade.getTotal());
 		}
-		BigDecimal totalGrade = totalScore.divide(sumTotal, 1, RoundingMode.HALF_UP).multiply(new BigDecimal(100));
+		BigDecimal totalGrade = totalScore.divide(sumTotal, 4, RoundingMode.HALF_UP)
+				.multiply(new BigDecimal(100)).setScale(1, RoundingMode.HALF_UP);
 		model.addAttribute("totalGrade", totalGrade);
 		return "list";
 	}
